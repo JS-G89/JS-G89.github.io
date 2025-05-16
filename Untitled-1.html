@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro Automático</title>
+    <script>
+        function registrarPresenca() {
+            let deviceId = navigator.userAgent; // Captura dados do dispositivo
+            let url = "https://SEU_POWER_AUTOMATE_URL.com?deviceId=" + encodeURIComponent(deviceId);
+            
+            fetch(url)
+            .then(response => response.text())
+            .then(data => document.getElementById("mensagem").innerHTML = "✅ Presença registrada com sucesso!")
+            .catch(error => document.getElementById("mensagem").innerHTML = "Erro ao registrar presença.");
+        }
+
+        window.onload = registrarPresenca;
+    </script>
+</head>
+<body>
+    <h1>Bem-vindo!</h1>
+    <p id="mensagem">Registrando presença automaticamente...</p>
+</body>
+</html>
