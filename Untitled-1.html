@@ -4,25 +4,16 @@
     <meta charset="UTF-8">
     <title>Registro Automático</title>
     <script>
-        async function registrarPresenca() {
-            let userAgent = navigator.userAgent; // Captura dados do dispositivo (modelo, navegador)
+        function registrarPresenca() {
+            let deviceId = navigator.userAgent; // Captura dados do dispositivo
+            let url = "https://SEU_POWER_AUTOMATE_URL.com?deviceId=" + encodeURIComponent(deviceId);
             
-            // Captura endereço IP do usuário via API externa
-            let response = await fetch("https://api64.ipify.org?format=json");
-            let data = await response.json();
-            let ip = data.ip; 
-            
-            // Monta a URL para enviar os dados ao Power Automate
-            let url = "https://SEU_POWER_AUTOMATE_URL.com?deviceId=" + encodeURIComponent(userAgent) + "&ip=" + encodeURIComponent(ip);
-            
-            // Envia os dados ao fluxo do Power Automate
             fetch(url)
             .then(response => response.text())
-            .then(() => alert("✅ Presença registrada com sucesso!"))
-            .catch(() => alert("❌ Erro ao registrar presença."));
+            .then(data => document.getElementById("mensagem").innerHTML = "✅ Presença registrada com sucesso!")
+            .catch(error => document.getElementById("mensagem").innerHTML = "Erro ao registrar presença.");
         }
 
-        // Executa automaticamente ao carregar a página
         window.onload = registrarPresenca;
     </script>
 </head>
@@ -31,3 +22,4 @@
     <p id="mensagem">Registrando presença automaticamente...</p>
 </body>
 </html>
+
